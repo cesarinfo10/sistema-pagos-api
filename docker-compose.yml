@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Base de datos MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: pagos-mysql
+    environment:
+      MYSQL_DATABASE: pagosdb
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - pagos-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Aplicación Spring Boot
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pagos-app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      # Configuración para conectar a MySQL dentro de Docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pagosdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root123
+    ports:
+      - "8001:8001"
+    networks:
+      - pagos-network
+    restart: unless-stopped
+
+# Volumen para persistir datos de MySQL
+volumes:
+  mysql-data:
+
+# Red para comunicación entre servicios
+networks:
+  pagos-network:
+    driver: bridge

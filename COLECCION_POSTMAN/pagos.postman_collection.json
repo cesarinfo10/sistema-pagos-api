@@ -1,0 +1,365 @@
+{
+	"info": {
+		"_postman_id": "3fc880d5-9465-4050-844b-f253b543f9b8",
+		"name": "pagos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3033024"
+	},
+	"item": [
+		{
+			"name": "1º-Nuevo_Comercio",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idComercio\": \"COM001\",\n  \"nombre\": \"Tienda El Ejemplo\",\n  \"montoMaximoTransaccion\": 10000.00,\n  \"estado\": \"ACTIVO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/comercios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"comercios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2º-Consulta_Comercio",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/comercios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"comercios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3º-Procesar_Pago_Exitoso",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchantId\": \"COM001\",\n  \"amount\": 1500.50,\n  \"currency\": \"USD\",\n  \"cardToken\": \"tok_visa_4242\",\n  \"expirationDate\": \"12/25\",\n  \"operationType\": \"COMPRA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3º-Procesar_Pago_Excede_Limite",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchantId\": \"COM001\",\n  \"amount\": 15000.00,\n  \"currency\": \"USD\",\n  \"cardToken\": \"tok_visa_4242\",\n  \"expirationDate\": \"12/25\",\n  \"operationType\": \"COMPRA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3º-Procesar_Pago_Tarjeta_Bloqueada",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchantId\": \"COM001\",\n  \"amount\": 1500.50,\n  \"currency\": \"USD\",\n  \"cardToken\": \"4111111111111111\",\n  \"expirationDate\": \"12/25\",\n  \"operationType\": \"COMPRA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4º-Consulta_Transaccion",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/payments/TXN-2A09C2F5-0948-4365",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"payments",
+						"TXN-2A09C2F5-0948-4365"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4º-Consulta_Transaccion_No_Encontrada",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/payments/TXN-INVALIDO-123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"payments",
+						"TXN-INVALIDO-123"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5º-Listar_Transacciones",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5º-Filtrar_por_Comercio",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/payments?idComercio=COM001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"payments"
+					],
+					"query": [
+						{
+							"key": "idComercio",
+							"value": "COM001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5º-Filtrar_por_Estado",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/payments?estado=APPROVED",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"payments"
+					],
+					"query": [
+						{
+							"key": "estado",
+							"value": "APPROVED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5º-Filtrar_ Comercio_Estado",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/payments?idComercio=COM001&estado=APPROVED",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"payments"
+					],
+					"query": [
+						{
+							"key": "idComercio",
+							"value": "COM001"
+						},
+						{
+							"key": "estado",
+							"value": "APPROVED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6º-Actualizar_Comercio_Estado",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"estado\": \"ACTIVO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/comercios/COM001/estado",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"comercios",
+						"COM001",
+						"estado"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7º-1-Pago_Comercio_Inactivo_opcional",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchantId\": \"COM001\",\n  \"amount\": 1500.50,\n  \"currency\": \"USD\",\n  \"cardToken\": \"tok_visa_4242\",\n  \"expirationDate\": \"12/25\",\n  \"operationType\": \"COMPRA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7º-2-Pago_Comercio_Inexistente_opcional",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"merchantId\": \"COM999\",\n  \"amount\": 1500.50,\n  \"currency\": \"USD\",\n  \"cardToken\": \"tok_visa_4242\",\n  \"expirationDate\": \"12/25\",\n  \"operationType\": \"COMPRA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"payments"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
